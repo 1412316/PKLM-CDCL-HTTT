@@ -1,0 +1,6 @@
+c:\users\kim\documents\visual studio 2013\Projects\TienXuLy\TienXuLy\bin\Debug\TienXuLy.exe.config
+c:\users\kim\documents\visual studio 2013\Projects\TienXuLy\TienXuLy\bin\Debug\TienXuLy.exe
+c:\users\kim\documents\visual studio 2013\Projects\TienXuLy\TienXuLy\bin\Debug\TienXuLy.pdb
+c:\users\kim\documents\visual studio 2013\Projects\TienXuLy\TienXuLy\obj\Debug\TienXuLy.csprojResolveAssemblyReference.cache
+c:\users\kim\documents\visual studio 2013\Projects\TienXuLy\TienXuLy\obj\Debug\TienXuLy.exe
+c:\users\kim\documents\visual studio 2013\Projects\TienXuLy\TienXuLy\obj\Debug\TienXuLy.pdb
