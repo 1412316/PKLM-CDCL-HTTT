@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using System.Threading.Tasks;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace TienXuLy
 {
@@ -254,17 +255,7 @@ namespace TienXuLy
 
         public static string XoaKyTu(string str)
         {
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (str[i] == '.' || str[i] == ',' || str[i] == '?' || str[i] == '!' || str[i] == '~' || str[i] == '@'
-                    || str[i] == '#' || str[i] == '$' || str[i] == '%' || str[i] == '^' || str[i] == '&' || str[i] == '*'
-                    || str[i] == '(' || str[i] == ')' || str[i] == '`' || str[i] == '-' || str[i] == '_' || str[i] == '='
-                    || str[i] == '+' || str[i] == '|' || str[i] == '{' || str[i] == '}' || str[i] == '[' || str[i] == ']'
-                    || str[i] == ':' || str[i] == ';' || str[i] == '"' || str[i] == '<' || str[i] == '>' || str[i] == '/')
-                {
-                    str = str.Replace((char)str[i], ' ');
-                }
-            }
+            str = Regex.Replace(str, @"[^\w\s]", "");
             return str;
         }
 
