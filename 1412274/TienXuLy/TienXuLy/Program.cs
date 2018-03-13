@@ -10,6 +10,235 @@ namespace TienXuLy
 {
     class Program
     {
+        //Đọc và tạo danh sách các document. Moi mot phan tu la 1 dong trong file text
+        public static List<Document> taoDocumentList(StreamReader sr)
+        {
+            String line = null;
+            List<Document> documentList = new List<Document>();
+            int j = 0; //Cho biết document thứ bao nhiêu trong documentList
+
+            //Mỗi một line (dòng) là một document
+            while ((line = sr.ReadLine()) != null)
+            {
+                //Thêm một document rỗng vào danh sách documents
+                documentList.Add(new Document());
+
+                //Tạo ra các feature từ line mới đọc (dấu khoảng cách ngăn cách 2 features)
+                String[] features = line.Split(' ');
+
+                //Với mỗi feature kiem tra xem da co feature nay chua. Neu co roi thi tang trong so len. 
+                for (int i = 0; i < features.Length; i++)
+                {
+                    //Tìm index của feature (tìm xem có feature đó trong document chưa)
+                    int featureIndex = documentList.ElementAt(j).timIndexCuaFeatureTrongDocument(features[i]);
+
+                    if (featureIndex >= 0)
+                    {
+                        //Nếu có rồi thì tăng weight cho feature đó trong document này
+                        documentList.ElementAt(j).tangWeightChoFeatureCuaDocument(featureIndex);
+                    }
+                    else
+                    {
+                        //Nếu chưa có thì thêm feature đó vào document này
+                        documentList.ElementAt(j).themFeatureVaoDocument(features[i]);
+                    }
+                }
+
+                j++;
+            }
+
+            //Trả về danh sách documents
+            return documentList;
+        }
+
+        //Hàm in danh sách features xuống file. Liet ke cac feature co trong file 
+        public static List<String> inFeatureList(String featureList, List<Document> documentList)
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(featureList))
+                {
+                    //Đây là danh sách các feature trong tất cả các document (một feature nằm trong 
+                    //nhiều documents thì cũng chỉ có một phần tử trong danh sách features này
+                    List<String> features = new List<String>();
+
+                    //Với mỗi document
+                    documentList.ForEach(delegate (Document d)
+                    {
+                        //Với mỗi feature trong document đó
+                        d.featureList.ForEach(delegate (Feature f)
+                        {
+                            int exist = 0;
+
+                            //Tìm xem trong danh sách các feature đã có feature nay chưa
+                            foreach (String feature in features)
+                            {
+                                //Nếu có rồi thì ghi nhận đã exist (=1)
+                                if (feature == f.feature)
+                                {
+                                    exist = 1;
+                                }
+                            }
+
+                            //Nếu chưa tồn tại feature này trong danh sách features thì thêm vào
+                            if (exist == 0)
+                            {
+                                features.Add(f.feature);
+                            }
+                        });
+                    });
+
+                    //Với mỗi feature in ra file
+                    foreach (String feature in features)
+                    {
+                        sw.WriteLine(feature);
+                    }
+
+                    return features;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Có lỗi trong lúc viết file: " + e.Message);
+                return null;
+            }
+        }
+
+        //Tinh so luong van ban co tu feature i bat ki 
+        public static int DemDocChuaI(string i, List<Document> documentlist)
+        {
+            int count = 0;
+            documentlist.ForEach(delegate (Document x)
+            {
+                x.featureList.ForEach(delegate (Feature y)
+                {
+                    if (y.feature == i)
+                    {
+                        count++;
+                    }
+                });
+            });
+            return count;
+        }
+
+        //Tìm feature xuất hiện nhiều nhất trong Dj 
+        public static int TinhMaxDj(Document a)
+        {
+            int max_temp = 0;
+            a.featureList.ForEach(delegate (Feature i)
+            {
+                if (i.weight > max_temp)
+                {
+                    max_temp = i.weight;
+                }
+            });
+            return max_temp;
+        }
+
+        public void PrintOutPut(List<Document> TF_IDF, string ouput)
+        {
+            using (StreamWriter sw = new StreamWriter(ouput))
+            {
+                TF_IDF.ForEach(delegate (Document x)
+                {
+                    x.featureList.ForEach(delegate (Feature y)
+                    {
+                        sw.Write(y.weight);
+                        sw.Write("\t");
+
+                    });
+                    sw.Write("\n");
+                });
+                sw.Close();
+            }
+        }
+
+        public static int getweigth(Document d, string a)
+        {
+            int weight = 0;
+            d.featureList.ForEach(delegate (Feature x)
+            {
+                if (x.feature == a)
+                {
+                    weight = x.weight;
+                }
+            });
+            return weight;
+        }
+
+        public static void bow_tfdf(String input, String output, String featureList, string round)
+        {
+            try
+            {
+                //List chứa các trị số mới TF_IDF
+                int round_num = 0;
+                List<Document> TF_IDF_List = new List<Document>();
+                // đọc lấy số làm tròn . 
+                using (StreamReader fileround = new StreamReader(round))
+                {
+                    round_num = Int32.Parse(fileround.ReadLine().ToString());
+                }
+                using (StreamReader sr = new StreamReader(input))
+                {
+                    //Tạo danh sách các features theo các documents
+                    List<Document> documentList = taoDocumentList(sr);
+                    //In ra màn hình xem thử kết quả
+                    String final = "";
+                    documentList.ForEach(delegate (Document d)
+                    {
+                        d.featureList.ForEach(delegate (Feature f)
+                        {
+                            final += f.feature + f.weight + " ";
+                        });
+
+                        final += "\n";
+                    });
+
+                    Console.WriteLine(final);
+                    //In danh sách features ra file (danh sách này chứa các feature duy nhất dù feature
+                    //đó xuất hiện trong nhiều document khách nhau
+                    List<String> fList = inFeatureList(featureList, documentList);
+                    // doclength là số lượng văn bản trong file 
+                    int doc_length = documentList.Count;
+
+                    using (StreamWriter fileout = new StreamWriter(output))
+                    {
+                        documentList.ForEach(delegate (Document x)
+                        {
+
+                            TF_IDF_List.Add(new Document());
+                            // tìm trọng số  lớn nhất trong 1 document
+                            int max = TinhMaxDj(x);
+                            fList.ForEach(delegate (String j)
+                            {
+                                //lấy số lượng văn bản có string j
+                                int doc_count = DemDocChuaI(j, documentList);
+                                float tf = 0;
+                                Double IDF = 0;
+                                Double TF_IDF = 0;
+                                // Lấy trọng số của string j trong document  
+                                int weigthj = getweigth(x, j);
+                                tf = weigthj / (float)max;
+                                IDF = Math.Log10((float)doc_length / (float)doc_count);
+                                TF_IDF = Math.Round(tf * IDF, round_num);
+                                fileout.Write(TF_IDF);
+                                fileout.Write('\t');
+                            });
+
+                            fileout.WriteLine();
+                        });
+
+                        fileout.Close();
+                        Console.WriteLine("Thao tác thành công!!");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Có lỗi trong lúc đọc file: " + e.Message);
+            }
+        }
+
         public static string XoaTrang(string str)
         {
             //Xoa trang thua o dau va cuoi chuoi
@@ -143,6 +372,61 @@ namespace TienXuLy
                 }
                 fileout.Close();
             }
+
+            bow_tfdf("output.txt", "output2.txt", "featureList.txt", "round.txt");
         }
+    }
+}
+
+public class Document
+{
+    public List<Feature> featureList { get; set; }
+
+    public Document()
+    {
+        this.featureList = new List<Feature>();
+    }
+
+    public int timIndexCuaFeatureTrongDocument(String feature)
+    {
+        return this.featureList.FindIndex(x => x.feature == feature);
+    }
+
+    public void tangWeightChoFeatureCuaDocument(int featureIndex)
+    {
+        this.featureList.ElementAt(featureIndex).tangWeight();
+    }
+
+    public void themFeatureVaoDocument(String feature)
+    {
+        featureList.Add(new Feature(feature, 1));
+    }
+    public void themfeature(String feature, int weigth)
+    {
+        featureList.Add(new Feature(feature, weigth));
+    }
+
+}
+
+public class Feature
+{
+    public String feature { get; set; }
+    public int weight { get; set; }
+
+    public void tangWeight()
+    {
+        this.weight++;
+    }
+
+    public Feature()
+    {
+        this.feature = "";
+        this.weight = 0;
+    }
+
+    public Feature(String feature, int weight)
+    {
+        this.feature = feature;
+        this.weight = weight;
     }
 }
