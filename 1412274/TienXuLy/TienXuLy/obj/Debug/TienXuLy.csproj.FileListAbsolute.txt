@@ -11,3 +11,9 @@ C:\Users\ThienPhu\Documents\GitHub\PKLM-CDCL-HTTT\1412274\TienXuLy\TienXuLy\obj\
 C:\Users\ThienPhu\Documents\GitHub\PKLM-CDCL-HTTT\1412274\TienXuLy\TienXuLy\bin\Debug\TienXuLy.exe.config
 C:\Users\ThienPhu\Documents\GitHub\PKLM-CDCL-HTTT\1412274\TienXuLy\TienXuLy\bin\Debug\TienXuLy.exe
 C:\Users\ThienPhu\Documents\GitHub\PKLM-CDCL-HTTT\1412274\TienXuLy\TienXuLy\bin\Debug\TienXuLy.pdb
+D:\Git\PKLM-CDCL-HTTT\1412274\TienXuLy\TienXuLy\bin\Debug\TienXuLy.exe.config
+D:\Git\PKLM-CDCL-HTTT\1412274\TienXuLy\TienXuLy\obj\Debug\TienXuLy.exe
+D:\Git\PKLM-CDCL-HTTT\1412274\TienXuLy\TienXuLy\obj\Debug\TienXuLy.pdb
+D:\Git\PKLM-CDCL-HTTT\1412274\TienXuLy\TienXuLy\bin\Debug\TienXuLy.exe
+D:\Git\PKLM-CDCL-HTTT\1412274\TienXuLy\TienXuLy\bin\Debug\TienXuLy.pdb
+D:\Git\PKLM-CDCL-HTTT\1412274\TienXuLy\TienXuLy\obj\Debug\TienXuLy.csprojResolveAssemblyReference.cache
