@@ -53,7 +53,7 @@ namespace TienXuLy
         }
 
         //Hàm in danh sách features xuống file. Liet ke cac feature co trong file 
-        public static List<String> inFeatureList(String featureList, List<Document> documentList)
+        public static List<Feature> inFeatureList(String featureList, List<Document> documentList)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace TienXuLy
                 {
                     //Đây là danh sách các feature trong tất cả các document (một feature nằm trong 
                     //nhiều documents thì cũng chỉ có một phần tử trong danh sách features này
-                    List<String> features = new List<String>();
+                    List<Feature> features = new List<Feature>();
 
                     //Với mỗi document
                     documentList.ForEach(delegate (Document d)
@@ -72,27 +72,29 @@ namespace TienXuLy
                             int exist = 0;
 
                             //Tìm xem trong danh sách các feature đã có feature nay chưa
-                            foreach (String feature in features)
+                            foreach (Feature feature in features)
                             {
                                 //Nếu có rồi thì ghi nhận đã exist (=1)
-                                if (feature == f.feature)
+                                if (feature.feature == f.feature)
                                 {
                                     exist = 1;
+                                    feature.weight++;
+                                    break;
                                 }
                             }
 
                             //Nếu chưa tồn tại feature này trong danh sách features thì thêm vào
                             if (exist == 0)
                             {
-                                features.Add(f.feature);
+                                features.Add(new Feature(f.feature, 1));
                             }
                         });
                     });
 
                     //Với mỗi feature in ra file
-                    foreach (String feature in features)
+                    foreach (Feature feature in features)
                     {
-                        sw.WriteLine(feature);
+                        sw.WriteLine(feature.feature + " " + feature.weight);
                     }
 
                     return features;
@@ -123,9 +125,9 @@ namespace TienXuLy
         }
 
         //Tìm feature xuất hiện nhiều nhất trong Dj 
-        public static int TinhMaxDj(Document a)
+        public static double TinhMaxDj(Document a)
         {
-            int max_temp = 0;
+            double max_temp = 0;
             a.featureList.ForEach(delegate (Feature i)
             {
                 if (i.weight > max_temp)
@@ -154,9 +156,9 @@ namespace TienXuLy
             }
         }
 
-        public static int getweigth(Document d, string a)
+        public static double getweigth(Document d, string a)
         {
-            int weight = 0;
+            double weight = 0;
             d.featureList.ForEach(delegate (Feature x)
             {
                 if (x.feature == a)
@@ -198,7 +200,7 @@ namespace TienXuLy
                     Console.WriteLine(final);
                     //In danh sách features ra file (danh sách này chứa các feature duy nhất dù feature
                     //đó xuất hiện trong nhiều document khách nhau
-                    List<String> fList = inFeatureList(featureList, documentList);
+                    List<Feature> fList = inFeatureList(featureList, documentList);
                     // doclength là số lượng văn bản trong file 
                     int doc_length = documentList.Count;
 
@@ -209,17 +211,17 @@ namespace TienXuLy
 
                             TF_IDF_List.Add(new Document());
                             // tìm trọng số  lớn nhất trong 1 document
-                            int max = TinhMaxDj(x);
-                            fList.ForEach(delegate (String j)
+                            double max = TinhMaxDj(x);
+                            fList.ForEach(delegate (Feature j)
                             {
                                 //lấy số lượng văn bản có string j
-                                int doc_count = DemDocChuaI(j, documentList);
-                                float tf = 0;
+                                int doc_count = DemDocChuaI(j.feature, documentList);
+                                double tf = 0;
                                 Double IDF = 0;
                                 Double TF_IDF = 0;
                                 // Lấy trọng số của string j trong document  
-                                int weigthj = getweigth(x, j);
-                                tf = weigthj / (float)max;
+                                double weigthj = getweigth(x, j.feature);
+                                tf = weigthj / max;
                                 IDF = Math.Log10((float)doc_length / (float)doc_count);
                                 TF_IDF = Math.Round(tf * IDF, round_num);
                                 fileout.Write(TF_IDF);
@@ -259,13 +261,13 @@ namespace TienXuLy
             return str;
         }
 
-        public static void Main()
+        public static void tienXuLy(String input, String output)
         {
             //System.IO.File.WriteAllText(@"C:\Users\Kim\Desktop\output.txt", string.Empty);
             //System.IO.File.WriteAllText("output.txt", string.Empty);
-            
+
             EnglishPorter2Stemmer stemword = new EnglishPorter2Stemmer();
-            
+
             string line = null;
 
             List<string> Texts = new List<string>();
@@ -274,7 +276,7 @@ namespace TienXuLy
             bool flag;
 
             //Doc cac van ban tu file input
-            using (StreamReader filein = new StreamReader("input.txt"))
+            using (StreamReader filein = new StreamReader(input))
             {
                 while ((line = filein.ReadLine()) != null)
                 {
@@ -306,7 +308,7 @@ namespace TienXuLy
             }
 
             Console.WriteLine("===============Xu ly===============");
-            
+
             //Xu ly co ban cho cac dong van ban
             for (int i = 0; i < Texts.Count(); i++)
             {
@@ -326,23 +328,23 @@ namespace TienXuLy
 
             Console.WriteLine("=====Cac van ban sau khi xu ly=====");
 
-            using (StreamWriter fileout = new StreamWriter("output.txt"))
+            using (StreamWriter fileout = new StreamWriter(output))
             {
                 foreach (string t in Texts)
                 {
                     string[] temp = t.Split(' ');
-                    
+
                     for (int i = 0; i < temp.Length; i++)
                     {
                         flag = true;
                         temp[i] = stemword.Stem(temp[i]).Value;
-                        
+
                         foreach (string st in StopWords)
                         {
                             if (st == temp[i])
                                 flag = false;
                         }
-                        
+
                         if (flag == true)
                         {
                             if (i == (temp.Length - 1))
@@ -363,8 +365,100 @@ namespace TienXuLy
                 }
                 fileout.Close();
             }
+        }
+
+        public static double timWeightCuaFeatureTrongDocument(Document document, String feature)
+        {
+            double weight = 0;
+
+            document.featureList.ForEach(delegate (Feature f)
+            {
+                if (f.feature == feature)
+                {
+                    weight = f.weight;
+                }
+            });
+
+            return weight;
+        }
+
+        public static double timSoLanXuatHienNhieuNhat(Document document)
+        {
+            double max = 0;
+
+            document.featureList.ForEach(delegate (Feature f)
+            {
+                if (f.weight > max)
+                {
+                    max = f.weight;
+                }
+            });
+
+            return max;
+        }
+
+        public static int timSoLuongVanBan(String input)
+        {
+            String line = null;
+            int numberOfLines = 0;
+            using (StreamReader sr = new StreamReader(input))
+            {
+                while((line = sr.ReadLine()) != null)
+                {
+                    numberOfLines++;
+                }
+            }
+
+            return numberOfLines;
+        }
+
+        public static void timKiem(Document searchedDocument, int numberOfDocuments, String searchOutput)
+        {
+            Document searchedDocument_tfidf = new Document();
+            List<Feature> featureList = new List<Feature>();
+
+            using (StreamReader sr = new StreamReader("featureList.txt"))
+            {
+                String line = null;
+                while((line = sr.ReadLine()) != null)
+                {
+                    String[] feature = line.Split(' ');
+
+                    featureList.Add(new Feature(feature[0], Int32.Parse(feature[1])));
+                }
+            }
+
+            int numberOfLines = timSoLuongVanBan("output.txt");
+
+            featureList.ForEach(delegate (Feature f)
+            {
+                double tf = (double)timWeightCuaFeatureTrongDocument(searchedDocument, f.feature) / timSoLanXuatHienNhieuNhat(searchedDocument);
+                double idf = Math.Log10((double)numberOfLines / f.weight);
+                searchedDocument_tfidf.featureList.Add(new Feature(f.feature, Math.Round(tf * idf, 4)));
+            });
+
+            searchedDocument_tfidf.featureList.ForEach(delegate (Feature f)
+            {
+                Console.Write(f.weight + "\t");
+            });
+        }
+
+        public static void Main()
+        {
+            tienXuLy("input.txt", "output.txt");
 
             bow_tfdf("output.txt", "output2.txt", "featureList.txt", "round.txt");
+
+            tienXuLy("searchInput.txt", "preprocessedSearchInput.txt");
+
+            using (StreamReader sr = new StreamReader("preprocessedSearchInput.txt"))
+            {
+                List<Document> documentList = taoDocumentList(sr);
+
+                timKiem(documentList.ElementAt(0),
+                    Int32.Parse(documentList.ElementAt(1).featureList.ElementAt(0).feature),
+                    "searchOutput.txt");
+            }
         }
     }
 }
@@ -402,7 +496,7 @@ public class Document
 public class Feature
 {
     public String feature { get; set; }
-    public int weight { get; set; }
+    public double weight { get; set; }
 
     public void tangWeight()
     {
@@ -415,7 +509,7 @@ public class Feature
         this.weight = 0;
     }
 
-    public Feature(String feature, int weight)
+    public Feature(String feature, double weight)
     {
         this.feature = feature;
         this.weight = weight;

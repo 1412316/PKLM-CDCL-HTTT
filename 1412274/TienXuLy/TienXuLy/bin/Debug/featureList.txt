@@ -1,12 +1,15 @@
-my
-name
-kim
-girlfriend
-student
-of
-univers
-scienc
-if
-question
-ask
-me
+my 2
+name 2
+kim 1
+vuong 1
+thien 1
+phu 1
+girlfriend 1
+student 1
+of 1
+univers 1
+scienc 1
+if 1
+question 1
+ask 1
+me 1
