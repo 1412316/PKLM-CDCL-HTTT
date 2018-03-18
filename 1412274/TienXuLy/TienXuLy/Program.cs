@@ -487,6 +487,11 @@ namespace TienXuLy
                 searchedDocument_tfidf.featureList.Add(new Feature(f.feature, Math.Round(tf * idf, docRound())));
             });
 
+            searchedDocument_tfidf.featureList.ForEach(delegate (Feature f)
+            {
+                Console.Write(f.weight + "\t");
+            });
+
             List<double[]> bow_tfidf = docBOW_tfidf();
             SimilarityMeasure[] similarityMeasures = new SimilarityMeasure[numberOfDocuments];
             int i, j;
@@ -497,7 +502,7 @@ namespace TienXuLy
 
                 for (j = 0; j < searchedDocument_tfidf.featureList.Count; j++)
                 {
-                    value += Math.Pow(bow_tfidf.ElementAt(i)[j], 2) + Math.Pow(searchedDocument_tfidf.featureList.ElementAt(j).weight, 2);
+                    value += Math.Pow(bow_tfidf.ElementAt(i)[j] - searchedDocument_tfidf.featureList.ElementAt(j).weight, 2);
                 }
 
                 similarityMeasures[i] = new SimilarityMeasure(Math.Sqrt(value), i);
