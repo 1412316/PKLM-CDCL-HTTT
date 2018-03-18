@@ -6,6 +6,7 @@ using System.Data;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace TienXuLy
 {
@@ -412,7 +413,56 @@ namespace TienXuLy
             return numberOfLines;
         }
 
-        public static void timKiem(Document searchedDocument, int numberOfDocuments, String searchOutput)
+        public static int docRound()
+        {
+            using (StreamReader sr = new StreamReader("Round.txt"))
+            {
+                return Int32.Parse(sr.ReadLine());
+            }
+        }
+
+        public static List<double[]> docBOW_tfidf()
+        {
+            using (StreamReader sr = new StreamReader("output2.txt"))
+            {
+                List<double[]> bow_tfidf = new List<double[]>();
+                String line = null;
+                
+                while((line = sr.ReadLine()) != null)
+                {
+                    String[] str = line.Split('\t');
+                    double[] d = new double[str.Length];
+                    int i = 0;
+
+                    for (i = 0; i < str.Length - 1; i++)
+                    {
+                        d[i] = Double.Parse(str[i]);
+                    }
+
+                    bow_tfidf.Add(d);
+                }
+
+                return bow_tfidf;
+            }
+        }
+
+        public static List<String> layDocuments()
+        {
+            using (StreamReader sr = new StreamReader("input.txt"))
+            {
+                String line = null;
+                List<String> lstr = new List<string>();
+
+                while((line = sr.ReadLine()) != null)
+                {
+                    lstr.Add(line);
+                }
+
+                return lstr;
+            }
+        }
+
+        public static void timKiem(Document searchedDocument, int numberOfReturnDocuments, String searchOutput)
         {
             Document searchedDocument_tfidf = new Document();
             List<Feature> featureList = new List<Feature>();
@@ -428,19 +478,42 @@ namespace TienXuLy
                 }
             }
 
-            int numberOfLines = timSoLuongVanBan("output.txt");
+            int numberOfDocuments = timSoLuongVanBan("output.txt");
 
             featureList.ForEach(delegate (Feature f)
             {
                 double tf = (double)timWeightCuaFeatureTrongDocument(searchedDocument, f.feature) / timSoLanXuatHienNhieuNhat(searchedDocument);
-                double idf = Math.Log10((double)numberOfLines / f.weight);
-                searchedDocument_tfidf.featureList.Add(new Feature(f.feature, Math.Round(tf * idf, 4)));
+                double idf = Math.Log10((double)numberOfDocuments / f.weight);
+                searchedDocument_tfidf.featureList.Add(new Feature(f.feature, Math.Round(tf * idf, docRound())));
             });
 
-            searchedDocument_tfidf.featureList.ForEach(delegate (Feature f)
+            List<double[]> bow_tfidf = docBOW_tfidf();
+            SimilarityMeasure[] similarityMeasures = new SimilarityMeasure[numberOfDocuments];
+            int i, j;
+
+            for (i = 0; i < numberOfDocuments; i++)
             {
-                Console.Write(f.weight + "\t");
-            });
+                double value = 0;
+
+                for (j = 0; j < searchedDocument_tfidf.featureList.Count; j++)
+                {
+                    value += Math.Pow(bow_tfidf.ElementAt(i)[j], 2) + Math.Pow(searchedDocument_tfidf.featureList.ElementAt(j).weight, 2);
+                }
+
+                similarityMeasures[i] = new SimilarityMeasure(Math.Sqrt(value), i);
+            }
+
+            SimilarityMeasure[] sortedSimilarityMeasures = similarityMeasures.OrderBy(sm => sm.value).ToArray();
+
+            List<String> lstr = layDocuments();
+
+            using (StreamWriter sw = new StreamWriter("searchOutput.txt"))
+            {
+                for (int k = 0; k < numberOfReturnDocuments; k++)
+                {
+                    sw.WriteLine(lstr.ElementAt(sortedSimilarityMeasures[k].index));
+                }
+            }
         }
 
         public static void Main()
@@ -513,5 +586,17 @@ public class Feature
     {
         this.feature = feature;
         this.weight = weight;
+    }
+}
+
+public class SimilarityMeasure
+{
+    public double value { get; set; }
+    public int index { get; set; }
+
+    public SimilarityMeasure(double value, int index)
+    {
+        this.value = value;
+        this.index = index;
     }
 }
