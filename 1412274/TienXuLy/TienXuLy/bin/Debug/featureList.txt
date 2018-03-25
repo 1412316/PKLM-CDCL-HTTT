@@ -1,12 +1,13 @@
-my
-name
-kim
-girlfriend
-student
-of
-univers
-scienc
-if
-question
-ask
-me
+name 0.778
+kim 0.778
+student 0.778
+university 0.778
+science 0.778
+major 0.778
+information 0.301
+technology 0.301
+can 0.477
+ask 0.778
+questions 0.778
+contact 0.778
+ok 0.778
