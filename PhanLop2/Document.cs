@@ -208,15 +208,18 @@ namespace PhanLop
                 }
             }
 
-            foreach (var val in classesOfDocument)
+            int max = classesOfDocument.ElementAt(0).Value;
+            String maxClass = classesOfDocument.ElementAt(0).Key;
+            for (int t = 0; t < classesOfDocument.Count; t++)
             {
-                if (val.Value > numberOfReturnDocuments / 2)
+                if (classesOfDocument.ElementAt(t).Value > max)
                 {
-                    return val.Key;
+                    max = classesOfDocument.ElementAt(t).Value;
+                    maxClass = classesOfDocument.ElementAt(t).Key;
                 }
             }
 
-            return "";
+            return maxClass;
         }
 
         public static List<String> layChuoiCacDocuments(String input)
