@@ -1,0 +1,6 @@
+I like to play sport..	class:education
+I don't like to study	class:education
+Univeristy of Science is very famous	class:education
+football is the king sport	class:sport
+many People like to watch football.	class:sport
+that teacher is very beautiful.	class:education
