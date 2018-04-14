@@ -2,11 +2,11 @@
 ## Đồ án môn Chuyên đề chọn lọc trong HTTT
 
 ## Thành viên:
-**1412316** Đặng Nhật Minh
-**1412274** Nguyễn Hoàng Kim
-**1412278** Phan Khánh Lâm
-**1412282** Nguyễn Hoàng Lân
-**1412414** Vương Thiên Phú
+* **1412316** Đặng Nhật Minh
+* **1412274** Nguyễn Hoàng Kim
+* **1412278** Phan Khánh Lâm
+* **1412282** Nguyễn Hoàng Lân
+* **1412414** Vương Thiên Phú
 
 ## Chức năng
 * Chuẩn hóa văn bản:
