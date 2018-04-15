@@ -22,5 +22,5 @@
 
 ## Công việc
 * [ ] Viết chương trình đánh giá loại 1 (**Minh, Lân**)
-* [ ] Viết chương trình đánh giá loại 2 + test tính KNN và tham số K (**Kim , Phú, Lâm**)
+* [ ] Viết chương trình đánh giá loại 2 + test tính KNN và tham số K (**Kim, Phú, Lâm**)
 * [ ] Viết chương trình test bằng độ tương tự cosin (**Kim, Lâm, Minh**)
