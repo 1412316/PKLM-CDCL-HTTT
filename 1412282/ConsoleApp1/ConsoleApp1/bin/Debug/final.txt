@@ -1,0 +1,8 @@
+P(lgm)= 0.6
+R(lgm)= 0.5
+F(lgm)= 0.55
+P(spm)= 0.5
+R(spm)= 0.6
+F(spm)= 0.55
+F(macro)= 0.55
+F(micro)= 0.55
