@@ -81,24 +81,42 @@ namespace PhanLop
             //=========================================Phần tính thông tin của các class=========================================
             List<ClassInfo> listClass = ClassInfo.ThongTinClass("true.txt", "result.txt");
 
-            for (int k = 0; k < listClass.Count; k++)
+            using (StreamWriter sw = new StreamWriter("infoclass.txt"))
             {
-                Console.WriteLine("==========Class " + k + "==========");
-                Console.WriteLine("Ten class: " + listClass[k].ClassName);
-                Console.WriteLine("So van ban duoc phan dung vao class " + listClass[k].ClassName + ": " + listClass[k].NumberRightofClass);
-                Console.WriteLine("So van ban bi phan sai vao class " + listClass[k].ClassName + ": " + listClass[k].NumberWrongofClass);
-                Console.WriteLine("So van ban class " + listClass[k].ClassName + " bi phan sai vao class khac: " + listClass[k].NumberWrongoutClass);
-                Console.WriteLine("Do chinh xac cua class " + listClass[k].ClassName + ": " + listClass[k].Precision);
-                Console.WriteLine("Do bao phu cua class " + listClass[k].ClassName + ": " + listClass[k].Recall);
-                Console.WriteLine("Do do tong hop cua class " + listClass[k].ClassName + ": " + listClass[k].Fscore);
-                Console.WriteLine();
+                for (int k = 0; k < listClass.Count; k++)
+                {
+                    Console.WriteLine("==========Class " + k + "==========");
+                    Console.WriteLine("Ten class: " + listClass[k].ClassName);
+                    Console.WriteLine("So van ban duoc phan dung vao class " + listClass[k].ClassName + ": " + listClass[k].NumberRightofClass);
+                    Console.WriteLine("So van ban bi phan sai vao class " + listClass[k].ClassName + ": " + listClass[k].NumberWrongofClass);
+                    Console.WriteLine("So van ban class " + listClass[k].ClassName + " bi phan sai vao class khac: " + listClass[k].NumberWrongoutClass);
+                    Console.WriteLine("Do chinh xac cua class " + listClass[k].ClassName + ": " + listClass[k].Precision);
+                    Console.WriteLine("Do bao phu cua class " + listClass[k].ClassName + ": " + listClass[k].Recall);
+                    Console.WriteLine("Do do tong hop cua class " + listClass[k].ClassName + ": " + listClass[k].Fscore);
+                    Console.WriteLine();
+
+                    //Ghi ra file infoclass
+                    sw.WriteLine("==========Class " + k + "==========");
+                    sw.WriteLine("Ten class: " + listClass[k].ClassName);
+                    sw.WriteLine("So van ban duoc phan dung vao class " + listClass[k].ClassName + ": " + listClass[k].NumberRightofClass);
+                    sw.WriteLine("So van ban bi phan sai vao class " + listClass[k].ClassName + ": " + listClass[k].NumberWrongofClass);
+                    sw.WriteLine("So van ban class " + listClass[k].ClassName + " bi phan sai vao class khac: " + listClass[k].NumberWrongoutClass);
+                    sw.WriteLine("Do chinh xac cua class " + listClass[k].ClassName + ": " + listClass[k].Precision);
+                    sw.WriteLine("Do bao phu cua class " + listClass[k].ClassName + ": " + listClass[k].Recall);
+                    sw.WriteLine("Do do tong hop cua class " + listClass[k].ClassName + ": " + listClass[k].Fscore);
+                    sw.WriteLine();
+                }
+
+                double f_macro = ClassInfo.F_Macro(listClass);
+                double f_micro = ClassInfo.F_Micro(listClass, Document.demSoDocument("true.txt"));
+
+                Console.WriteLine("Do do F-macro: " + f_macro);
+                Console.WriteLine("Do do F-micro: " + f_micro);
+                //Ghi ra file infoclass
+                sw.WriteLine("Do do F-macro: " + f_macro);
+                sw.WriteLine("Do do F-micro: " + f_micro);
+
             }
-
-            double f_macro = ClassInfo.F_Macro(listClass);
-            double f_micro = ClassInfo.F_Micro(listClass, Document.demSoDocument("true.txt"));
-
-            Console.WriteLine("Do do F-macro: " + f_macro);
-            Console.WriteLine("Do do F-micro: " + f_micro);
 
         }
     }

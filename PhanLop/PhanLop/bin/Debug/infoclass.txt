@@ -1,0 +1,38 @@
+==========Class 0==========
+Ten class: food
+So van ban duoc phan dung vao class food: 7
+So van ban bi phan sai vao class food: 2
+So van ban class food bi phan sai vao class khac: 0
+Do chinh xac cua class food: 0.7778
+Do bao phu cua class food: 1
+Do do tong hop cua class food: 0.875
+
+==========Class 1==========
+Ten class: game
+So van ban duoc phan dung vao class game: 5
+So van ban bi phan sai vao class game: 0
+So van ban class game bi phan sai vao class khac: 0
+Do chinh xac cua class game: 1
+Do bao phu cua class game: 1
+Do do tong hop cua class game: 1
+
+==========Class 2==========
+Ten class: gundam
+So van ban duoc phan dung vao class gundam: 4
+So van ban bi phan sai vao class gundam: 0
+So van ban class gundam bi phan sai vao class khac: 2
+Do chinh xac cua class gundam: 1
+Do bao phu cua class gundam: 0.6667
+Do do tong hop cua class gundam: 0.8
+
+==========Class 3==========
+Ten class: sport
+So van ban duoc phan dung vao class sport: 6
+So van ban bi phan sai vao class sport: 0
+So van ban class sport bi phan sai vao class khac: 0
+Do chinh xac cua class sport: 1
+Do bao phu cua class sport: 1
+Do do tong hop cua class sport: 1
+
+Do do F-macro: 0.9304
+Do do F-micro: 0.9167
