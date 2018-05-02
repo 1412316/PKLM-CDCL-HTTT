@@ -56,7 +56,7 @@ namespace PhanLop
             return max;
         }
 
-        //Tinh so luong van ban co tu feature i bat ki 
+        //Tinh số lượng văn bản có từ feature i bất kì 
         public static int DemDocChuaI(string i, List<Document> documentlist)
         {
             int count = 0;

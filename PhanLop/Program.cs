@@ -28,7 +28,7 @@ namespace PhanLop
             //Tính bow tfidf
             BOW.bow_tfdf(documentListOfAllClasses, "output.txt", "featureList.txt");
 
-            // Tiền xử lý các document cần phan lớp
+            // Tiền xử lý các document cần phân lớp
             TienXuLy.tienXuLy("test.txt", "preprocessedTest.txt");
 
             // Các document cần được phân lớp
