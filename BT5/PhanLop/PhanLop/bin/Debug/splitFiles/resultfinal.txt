@@ -1,0 +1,32 @@
+F-macro[1] = 0.2666
+F-micro[1] = 0.3636
+
+F-macro[2] = 0.7609
+F-micro[2] = 0.7273
+
+F-macro[3] = 0.1538
+F-micro[3] = 0.1818
+
+F-macro[4] = 0.6031
+F-micro[4] = 0.3636
+
+F-macro[5] = 0.3124
+F-micro[5] = 0.4545
+
+F-macro[6] = 0.8382
+F-micro[6] = 0.9091
+
+F-macro[7] = 0.3889
+F-micro[7] = 0.6364
+
+F-macro[8] = 0.6031
+F-micro[8] = 0.3636
+
+F-macro[9] = 0.2666
+F-micro[9] = 0.3636
+
+F-macro[10] = 0.2499
+F-micro[10] = 0.3333
+
+Trung binh F-macro = 0.4444
+Trung binh F-micro = 0.4444

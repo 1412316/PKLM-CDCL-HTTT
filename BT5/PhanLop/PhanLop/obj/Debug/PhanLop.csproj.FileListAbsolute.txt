@@ -1,0 +1,13 @@
+C:\Users\nhkim\Documents\Visual Studio 2017\Projects\PhanLop\PhanLop\bin\Debug\PhanLop.exe.config
+C:\Users\nhkim\Documents\Visual Studio 2017\Projects\PhanLop\PhanLop\bin\Debug\PhanLop.exe
+C:\Users\nhkim\Documents\Visual Studio 2017\Projects\PhanLop\PhanLop\bin\Debug\PhanLop.pdb
+C:\Users\nhkim\Documents\Visual Studio 2017\Projects\PhanLop\PhanLop\obj\Debug\PhanLop.csprojResolveAssemblyReference.cache
+C:\Users\nhkim\Documents\Visual Studio 2017\Projects\PhanLop\PhanLop\obj\Debug\PhanLop.exe
+C:\Users\nhkim\Documents\Visual Studio 2017\Projects\PhanLop\PhanLop\obj\Debug\PhanLop.pdb
+D:\PhanLop\PhanLop\bin\Debug\PhanLop.exe.config
+D:\PhanLop\PhanLop\bin\Debug\PhanLop.exe
+D:\PhanLop\PhanLop\bin\Debug\PhanLop.pdb
+D:\PhanLop\PhanLop\obj\Debug\PhanLop.csprojResolveAssemblyReference.cache
+D:\PhanLop\PhanLop\obj\Debug\PhanLop.csproj.CoreCompileInputs.cache
+D:\PhanLop\PhanLop\obj\Debug\PhanLop.exe
+D:\PhanLop\PhanLop\obj\Debug\PhanLop.pdb
