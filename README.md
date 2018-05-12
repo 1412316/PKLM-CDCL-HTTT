@@ -28,6 +28,6 @@
 ## Seminar
 Phân công:
 
-* [ ] Cách cài đặt, các phiên bản, các thể loại, cài trên các nền tảng khác nhau (**Minh, Kim**)
-* [ ] Công dụng, cách áp dụng với các thể loại khác xml, cas, jcas, pear (**Lân, Minh**)
+* [ ] Cách cài đặt, các phiên bản, các thể loại, cài trên các nền tảng khác nhau (**Minh, Kim, Lân**)
+* [ ] Công dụng, cách áp dụng với các thể loại khác xml, cas, jcas, pear (**Minh, Lân**)
 * [ ] Ứng dụng, cài đặt ví dụ (**Kim, Lâm, Phú**)
