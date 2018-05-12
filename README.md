@@ -24,3 +24,10 @@
 * [ ] Viết chương trình đánh giá loại 1 (**Minh, Lân**)
 * [ ] Viết chương trình đánh giá loại 2 + test tính KNN và tham số K (**Kim, Phú, Lâm**)
 * [ ] Viết chương trình test bằng độ tương tự cosin (**Kim, Lâm, Minh**)
+
+## Seminar
+Phân công:
+
+* [ ] Cách cài đặt, các phiên bản, các thể loại, cài trên các nền tảng khác nhau (**Minh, Kim**)
+* [ ] Công dụng, cách áp dụng với các thể loại khác xml, cas, jcas, pear (**Lân, Minh**)
+* [ ] Ứng dụng, cài đặt ví dụ (**Kim, Lâm, Phú**)
